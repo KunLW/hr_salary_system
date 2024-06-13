@@ -1,0 +1,15 @@
+{% extends 'admin/base_site.html' %}
+{% load admin_modify %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    <div class="object-tools">
+        <a href="{% url 'admin:employee_employee_changelist' %}">Back to list</a>
+    </div>
+    <form method="post" class="form-horizontal">
+        {% csrf_token %}
+        {% for fieldset in adminform.fieldsets %}
+            {% include "admin/includes/fieldset.html" %}
+        {% endfor %}
+    </form>
+{% endblock %}

@@ -1,0 +1,324 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-13 15:00+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: employee/admin.py:38
+#, fuzzy
+#| msgid "Salary Process"
+msgid "Create Salary Process"
+msgstr "工资单"
+
+#: employee/admin.py:78
+msgid "company department"
+msgstr "公司部门"
+
+#: employee/admin.py:84
+msgid "position job"
+msgstr "岗职"
+
+#: employee/models.py:33
+msgid "company"
+msgstr "公司"
+
+#: employee/models.py:34
+msgid "companies"
+msgstr "公司"
+
+#: employee/models.py:48
+msgid "department"
+msgstr "部门"
+
+#: employee/models.py:49
+msgid "departments"
+msgstr "部门"
+
+#: employee/models.py:56
+msgid "Active"
+msgstr "在职"
+
+#: employee/models.py:57
+msgid "Dimission"
+msgstr "离职"
+
+#: employee/models.py:58
+msgid "Retired"
+msgstr "退休"
+
+#: employee/models.py:61
+msgid "Bank of the Philippine Islands"
+msgstr "菲律宾群岛银行"
+
+#: employee/models.py:62
+msgid "Banco de Oro"
+msgstr "黄金银行"
+
+#: employee/models.py:63
+msgid "Metrobank"
+msgstr "大都会银行"
+
+#: employee/models.py:64 employee/models.py:74
+msgid "Philippine National Bank"
+msgstr "菲律宾国家银行"
+
+#: employee/models.py:65
+msgid "Land Bank of the Philippines"
+msgstr "菲律宾土地银行"
+
+#: employee/models.py:66
+msgid "United Coconut Planters Bank"
+msgstr "联合椰子种植者银行"
+
+#: employee/models.py:67
+msgid "Development Bank of the Philippines"
+msgstr "菲律宾发展银行"
+
+#: employee/models.py:68
+msgid "Rizal Commercial Banking Corporation"
+msgstr "黎刹商业银行公司"
+
+#: employee/models.py:69
+msgid "Security Bank"
+msgstr "安全银行"
+
+#: employee/models.py:70
+msgid "EastWest Bank"
+msgstr "东亚银行"
+
+#: employee/models.py:71
+msgid "China Bank"
+msgstr "中国银行"
+
+#: employee/models.py:72
+msgid "HSBC"
+msgstr "汇丰银行"
+
+#: employee/models.py:73
+msgid "Citibank"
+msgstr "花旗银行"
+
+#: employee/models.py:75
+msgid "Others"
+msgstr "其他"
+
+#: employee/models.py:76
+msgid "China Zheshang Bank"
+msgstr "中国浙商银行"
+
+#: employee/models.py:80
+msgid "Full-time"
+msgstr "全职"
+
+#: employee/models.py:81
+msgid "Intern"
+msgstr "实习生"
+
+#: employee/models.py:82
+msgid "Probation"
+msgstr "试用期"
+
+#: employee/models.py:83
+msgid "Re-hire"
+msgstr "退休返聘"
+
+#: employee/models.py:84
+msgid "Cooperator"
+msgstr "合伙人"
+
+#: employee/models.py:86
+msgid "male"
+msgstr "男"
+
+#: employee/models.py:86
+msgid "female"
+msgstr "女"
+
+#: employee/models.py:145
+msgid "employee"
+msgstr "员工"
+
+#: employee/models.py:146
+msgid "employees"
+msgstr "员工"
+
+#: employee/models.py:159
+msgid "promotion record"
+msgstr "晋升记录"
+
+#: employee/models.py:160
+msgid "promotion records"
+msgstr "晋升记录"
+
+#: employee/models.py:166
+msgid "Intern Employee"
+msgstr "在职实习员工"
+
+#: employee/models.py:167
+msgid "Intern Employees"
+msgstr "在职实习员工"
+
+#: employee/models.py:173
+msgid "Active Employee"
+msgstr "在职员工"
+
+#: employee/models.py:174
+msgid "Active Employees"
+msgstr "在职员工"
+
+#: employee/models.py:179
+msgid "Dimission Employee"
+msgstr "离职员工"
+
+#: employee/models.py:180
+msgid "Dimission Employees"
+msgstr "离职员工"
+
+#: hr_salary_system/settings.py:136
+msgid "English"
+msgstr "英文"
+
+#: hr_salary_system/settings.py:137
+msgid "Simplified Chinese"
+msgstr "简体中文"
+
+#: hr_salary_system/urls.py:33 hr_salary_system/urls.py:34
+#: salary/admin_site.py:5 salary/admin_site.py:6
+msgid "HR and Salary Management System"
+msgstr "人事薪酬管理系统"
+
+#: hr_salary_system/urls.py:35 salary/admin_site.py:7
+msgid "HR and Salary Management"
+msgstr "人事薪酬管理"
+
+#: salary/models.py:10
+msgid "Management Position"
+msgstr "管理岗"
+
+#: salary/models.py:11
+msgid "Technocrat Position"
+msgstr "技术岗"
+
+#: salary/models.py:24
+msgid "position"
+msgstr "岗级"
+
+#: salary/models.py:25
+msgid "positions"
+msgstr "公司岗级"
+
+#: salary/models.py:31
+msgid "No Entered"
+msgstr "未录入"
+
+#: salary/models.py:32
+#, fuzzy
+#| msgid "Intern"
+msgid "Entered"
+msgstr "实习生"
+
+#: salary/models.py:33
+msgid "Checked"
+msgstr "已经审核"
+
+#: salary/models.py:34 salary/models.py:51
+msgid "Locked"
+msgstr "已锁定"
+
+#: salary/models.py:48
+msgid "Entering"
+msgstr "录入中"
+
+#: salary/models.py:49
+msgid "Checking"
+msgstr "审核中"
+
+#: salary/models.py:50
+msgid "Paying"
+msgstr "支付中"
+
+#: salary/models.py:75 salary/models.py:76
+msgid "Salary Process"
+msgstr "薪酬单"
+
+#: salary/models.py:103 salary/models.py:104
+msgid "Salary Rule"
+msgstr "公司薪酬发放规则"
+
+#: salary/models.py:110
+msgid "Super"
+msgstr "驻场餐补"
+
+#: salary/models.py:111
+msgid "Normal"
+msgstr "正常餐补"
+
+#: salary/models.py:112
+msgid "None"
+msgstr "无餐补"
+
+#: salary/models.py:131 salary/models.py:132
+msgid "Standard Salary"
+msgstr "员工定岗月薪"
+
+#: salary/models.py:155 salary/models.py:156
+msgid "Attendance"
+msgstr "员工考勤"
+
+#: salary/models.py:195 salary/models.py:196
+msgid "Social Security Provident Fund"
+msgstr "员工社保公积金"
+
+#: salary/models.py:200
+msgid "Initial Salary"
+msgstr "初始月薪"
+
+#: salary/models.py:201
+msgid "Subsidy"
+msgstr "福利"
+
+#: salary/models.py:202
+msgid "Assessment"
+msgstr "考核"
+
+#: salary/models.py:203
+msgid "After Tax"
+msgstr "税后"
+
+#: salary/models.py:206
+msgid "Increase"
+msgstr "增"
+
+#: salary/models.py:207
+msgid "Decrease"
+msgstr "减"
+
+#: salary/models.py:220
+msgid "Salary Adjustment"
+msgstr "薪酬调整"
+
+#: salary/models.py:221
+msgid "Salary Adjustments"
+msgstr "员工薪酬调整"
+
+#: salary/models.py:240 salary/models.py:241
+msgid "Income Tax"
+msgstr "个人所得税"
+
+#: salary/models.py:320 salary/models.py:321
+msgid "Salary Detail"
+msgstr "工资条"

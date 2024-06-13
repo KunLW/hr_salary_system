@@ -1,0 +1,8 @@
+{% extends "admin/change_form.html" %}
+{% load static %}
+
+{% block submit_buttons_bottom %}
+  {{ block.super }}
+  <input type="submit" value="Save and Verify" class="default" name="_saveandverify" />
+  <input type="submit" value="Reject" class="default" name="_reject" />
+{% endblock %}
