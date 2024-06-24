@@ -3,7 +3,34 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from employee.models import *
 import logging
+from . import rules
 logger = logging.getLogger(__name__)
+
+
+from django.db import models
+
+class MonthlyAutoField(models.CharField):
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = 20  # 设置合适的长度
+        super().__init__(*args, **kwargs)
+
+    def pre_save(self, model_instance, add):
+        if add:
+            now = timezone.now()
+            year_month = now.strftime('%Y%m')
+            last_instance = model_instance.__class__.objects.filter(
+                auto_field__startswith=year_month).order_by('auto_field').last()
+            
+            if last_instance:
+                last_id = int(last_instance.auto_field[len(year_month):])
+                new_id = f"{year_month}{last_id + 1:04d}"
+            else:
+                new_id = f"{year_month}0001"
+
+            setattr(model_instance, self.attname, new_id)
+            return new_id
+        else:
+            return super().pre_save(model_instance, add)
 
 # Position
 class Position(models.Model):
@@ -51,14 +78,14 @@ class SalaryProcess(models.Model):
         ('P', _('Paying')),
         ('L', _('Locked')),
     ]
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True, verbose_name='编号', editable=False)
+    month = models.CharField(max_length=7, verbose_name='生效月份')
     employees = models.ManyToManyField('employee.Employee', verbose_name='员工列表', blank=True)
     create_time = models.DateTimeField(verbose_name='生成时间', default=timezone.now, editable=False)
     last_update = models.DateTimeField(verbose_name='最后更新时间', auto_now=True)
-    month = models.CharField(max_length=7, verbose_name='生效月份', blank=True)
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, verbose_name='状态', default='E')
     def __str__(self):
-        return f"{self.month[2:4]}-{self.month[-2:]} 薪酬表"
+        return f"{self.id} 薪酬表"
     
     def calc(self):
         for employee in self.employees.all():
@@ -139,9 +166,8 @@ class Attendance(models.Model):
     effective_process = models.ForeignKey('SalaryProcess', on_delete=models.CASCADE, verbose_name='生效薪酬表')
     total_work_days = models.IntegerField(verbose_name='全勤天数', null=True, blank=False)
     work_days = models.IntegerField(verbose_name='出勤天数', null=True, blank=False)
-    leave_days = models.IntegerField(verbose_name='非带薪请假天数', null=True, blank=False)
+    # leave_days = models.IntegerField(verbose_name='非带薪请假天数', null=True, blank=False)
 
-    # deduction
     late_times = models.IntegerField(verbose_name='迟到次数', null=True, blank=False)
     early_leave_times = models.IntegerField(verbose_name='早退次数', null=True, blank=False)
     punch_in_missing_times = models.IntegerField(verbose_name='上班缺卡次数', null=True, blank=False)
@@ -225,7 +251,36 @@ class SalaryAdjustment(models.Model):
         verbose_name_plural = _('Salary Adjustments')
         unique_together = ['employee', 'effective_process', 'description']
 
-import rules
+
+from django.db import models
+
+class TaxRecord(models.Model):
+    ID_TYPE_CHOICES = [
+        ('passport', _('Passport')),
+        ('id_card', _('ID Card')),
+        # 添加其他类型根据需要
+    ]
+
+    INCOME_ITEM_CHOICES = [
+        ('salary', 'Salary'),
+        ('bonus', 'Bonus'),
+        # 添加其他所得项目根据需要
+    ]
+
+    employee = models.ForeignKey('employee.Employee', on_delete=models.CASCADE, verbose_name="员工", null=True, blank=True)
+    effective_process = models.ForeignKey('SalaryProcess', on_delete=models.CASCADE, verbose_name="薪酬表")
+    income_item = models.CharField(max_length=50, verbose_name="所得项目")
+    income = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="本期收入")
+    tax_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="税额")
+    notes = models.TextField(blank=True, null=True, verbose_name="备注")
+
+    def __str__(self):
+        return f"{self.employee} - {self.effective_process} 税务"
+
+    class Meta:
+        verbose_name = "税务记录"
+        verbose_name_plural = "税务记录"
+
 
 class IncomeTax(models.Model):
     employee = models.ForeignKey('employee.Employee', on_delete=models.CASCADE, verbose_name='员工')

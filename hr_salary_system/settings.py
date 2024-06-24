@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-umaxr#bauj$l8h36to6-(l5-u%*n4#lgw07re-ri)42c386aed
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["10.252.1.89", "192.168.2.121", "127.0.0.1"]
+ALLOWED_HOSTS = ["10.252.1.89", "192.168.2.121", "127.0.0.1", "localhost", "*"]
 
 
 # Application definition
@@ -35,12 +35,7 @@ ALLOWED_HOSTS = ["10.252.1.89", "192.168.2.121", "127.0.0.1"]
 INSTALLED_APPS = [
     'employee.apps.EmployeeConfig',
     'salary.apps.SalaryConfig',
-    'data_analysis.apps.DataAnalysisConfig',
-    'company.apps.CompanyConfig',
-    'salary_source_data.apps.SalarySourceDataConfig',
-    'checkable.apps.CheckableConfig',
-    # 'dal',
-    # 'dal_select2',
+    # 'checkable.apps.CheckableConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -48,9 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'import_export',
-    'admin_reorder',
-    # 'django_filters',
-    # 'advanced_filters', #not support Django 5.0
     'rangefilter',
 ]
 
@@ -58,7 +50,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
-    'admin_reorder.middleware.ModelAdminReorder',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -92,16 +83,15 @@ WSGI_APPLICATION = 'hr_salary_system.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "hr_db",
-        "USER": "kuenl",
-        "PASSWORD": "wkl1110",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hrsalarysystem',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'postgres',  # 使用Docker容器服务名称作为主机名
+        'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -141,14 +131,14 @@ LANGUAGES = (
 # 用于存放django.po和django.mo编译过的翻译文件
 PROJECT_ROOT = os.path.dirname(os.path.realpath(__name__))
 LOCALE_PATHS = (
-    os.path.join(PROJECT_ROOT, 'locale'),
+    os.path.join(BASE_DIR, 'locale'),
 )
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

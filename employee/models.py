@@ -8,7 +8,9 @@ from django.utils.translation import gettext_lazy as _
 from salary.models import Position
 from django.urls import reverse
 from django.utils.html import format_html
+from myfields import *
 # Create your models here.
+
 class Company(models.Model):
     # Basic Information
     company_id = models.CharField(max_length=7, primary_key=True, verbose_name="编号", unique=True)
@@ -19,7 +21,7 @@ class Company(models.Model):
     def custom_button(self, obj):
         url = reverse('admin:custom_view', args=[obj.id])
         return format_html('<a class="button" href="{}">Custom Button</a>', url)    
-        
+    
 
     def __str__(self):
         return self.name
@@ -49,13 +51,10 @@ class Department(models.Model):
         verbose_name_plural = _("departments")
         ordering = ["department_id"]
 
-
-
 class Employee(models.Model):
     STATUS_CHOICES = [
-        ('A', _('Active')),
-        ('D', _('Dimission')),
-        ('R', _('Retired')),
+        ('A', _('Active Status')),
+        ('D', _('Disactive Status')),
     ]
     BANK_CHOICES = [
             ('BPI', _('Bank of the Philippine Islands')),
@@ -83,11 +82,16 @@ class Employee(models.Model):
         ('RH', _('Re-hire')),
         ('CP', _('Cooperator')),
     ]
+    EMP_STATUS_CHOICES = [
+        ('A', _('Active')),
+        ('D', _('Dimission')),
+        ('R', _('Retired')),
+    ]
     GENDER_CHOICES = [('M', _('male')), ('F', _('female'))]
 
-
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, verbose_name="状态", default='A')
     # 个人信息
-    employee_id = models.CharField(primary_key=True, max_length=20, unique=True, verbose_name="编号")
+    employee_id = models.CharField(primary_key=True, max_length=20, unique=True, verbose_name="工号")
     name = models.CharField(max_length=100, verbose_name="姓名", null=True, blank=True)
     id_card_number = models.CharField(max_length=22, unique=True, verbose_name="身份证号码", null=True, blank=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name="性别", null=True, blank=True)
@@ -95,13 +99,14 @@ class Employee(models.Model):
     native_city = models.CharField(max_length=50, verbose_name="籍贯", null=True, blank=True)
     address = models.CharField(max_length=255, verbose_name="联系地址", null=True, blank=True)
     date_of_birth = models.DateField(verbose_name="出生年月", null=True, blank=True)
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES, verbose_name="员工状态", default='A')
+
 
     # 工作信息
     company = models.ForeignKey(Company, on_delete=models.CASCADE, verbose_name="公司", null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name="部门", null=True, blank=True)
     position = models.ForeignKey(Position, on_delete=models.CASCADE, verbose_name="岗级", null=True, blank=True)
-    job_position = models.CharField(max_length=100, verbose_name="岗位", null=True, blank=True, default="无岗")
+    job_position = models.CharField(max_length=100, verbose_name="岗位", null=True, blank=True, default="未定岗位")
+    employee_status = models.CharField(max_length=1, choices=EMP_STATUS_CHOICES, verbose_name="员工状态", default='A')
     hire_date = models.DateField(verbose_name="入职时间", null=True, blank=True)
     termination_date = models.DateField(verbose_name="离职时间", null=True, blank=True)
     hr_document_number = models.CharField(max_length=100, verbose_name="人事资料编号", null=True, blank=True)
@@ -114,28 +119,41 @@ class Employee(models.Model):
     employment_type = models.CharField(max_length=50, verbose_name="用工形式", choices=EMPLOYEE_TYPE, default='FT')
     contract_term = models.DurationField(verbose_name="合同期限", null=True, blank=True)
     contract_end_date = models.DateField(verbose_name="劳动合同到期时间", null=True, blank=True)
-    social_security_start_date = models.DateField(verbose_name="社保始缴日", null=True, blank=True)
-    housing_fund_start_date = models.DateField(verbose_name="公积金始缴日", null=True, blank=True)
+    ss_start_date = MonthField(verbose_name="社保始缴月", null=True, blank=True)
+    hf_start_date = MonthField(verbose_name="公积金始缴月", null=True, blank=True)
+    ss_record = models.TextField(verbose_name="社保始缴记录", null=True, blank=True)
+    hf_record = models.TextField(verbose_name="公积金始缴记录", null=True, blank=True)
     record_in_jijian = models.BooleanField(verbose_name="是否通过极简", default=True)
 
     # 教育信息
     major = models.CharField(max_length=100, verbose_name="毕业专业", null=True, blank=True)
     graduate_school = models.CharField(max_length=100, verbose_name="毕业学校", null=True, blank=True)
+    graduate_time = models.DateField(verbose_name="毕业时间", null=True, blank=True)
     education_level = models.CharField(max_length=50, verbose_name="文化程度", null=True, blank=True)
     highest_degree = models.CharField(max_length=50, verbose_name="最高学历", null=True, blank=True)
+    
+    # 证书信息
+    tech_title = models.CharField(max_length=50, verbose_name="职称", null=True, blank=True)
+    tech_title_time = models.DateField(verbose_name="职称取得时间", null=True, blank=True)
+    register_certification = models.TextField(blank=True, verbose_name="注册类", null=True)
+    qualification_certification = models.TextField(blank=True, verbose_name="资格类", null=True)
 
+    
     # 其他信息
     in_labour_union_member = models.BooleanField(verbose_name="是否为工会会员", default=True)
-    emergency_contact_phone = models.CharField(max_length=15, verbose_name="紧急联系电话", null=True, blank=True)
+    emergency_contact_name = models.CharField(max_length=15, verbose_name="紧急联系人姓名", null=True, blank=True)
+    emergency_contact_relation = models.CharField(max_length=15, verbose_name="紧急联系人与本人关系", null=True, blank=True)
+    emergency_contact_phone = models.CharField(max_length=15, verbose_name="紧急联系人电话", null=True, blank=True)
     political_affiliation = models.CharField(max_length=50, verbose_name="政治面貌", null=True, blank=True)
     notes = models.TextField(blank=True, verbose_name="备注", null=True)
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
-    last_modified = models.DateTimeField(auto_now=True, verbose_name="最后修改时间")
+    create_time = CreateTime()
+    last_modified = LastModified()
+    modifier = Modifier()
 
     def __str__(self):
         return self.name
     
-        
+
     def clean(self):
         # 检查公司名称和简称是否匹配
         if self.department.company.name != self.company.name:
@@ -144,7 +162,7 @@ class Employee(models.Model):
     class Meta:
         verbose_name = _("employee")
         verbose_name_plural = _("employees")
-        
+
 
 class PromotionRecord(models.Model):
     employee = models.OneToOneField('Employee', on_delete=models.CASCADE, verbose_name="员工")

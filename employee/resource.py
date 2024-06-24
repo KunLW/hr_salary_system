@@ -3,7 +3,7 @@ from import_export.widgets import Widget
 import json
 from datetime import datetime
 from .models import Company
-class CompanyResource(GenericModelResource):
+class CompanyResource(MixinModelResource):
     def __init__(self, *args, **kwargs):
         super().__init__(model=Company, *args, **kwargs)
 
@@ -36,7 +36,7 @@ class DateRangeListWidget(Widget):
     
     
 from .models import Department
-class DepartmentResource(GenericModelResource):
+class DepartmentResource(MixinModelResource):
     def __init__(self, *args, **kwargs):
         super().__init__(model=Department, *args, **kwargs)
         
@@ -52,13 +52,17 @@ class DepartmentResource(GenericModelResource):
 from .models import Employee
 from import_export.fields import Field
 from import_export import resources
-class EmployeeResource(GenericModelResource):
+
+
+
+class EmployeeResource(MixinModelResource):
     def __init__(self, *args, **kwargs):
         super().__init__(model=Employee, *args, **kwargs)
 
     class Meta:
         model = Employee
         import_id_fields = ['employee_id']
+        exclude_fields = []
         skip_unchanged = True
 
 class EmployeeActionResource(GenericModelActionResource):

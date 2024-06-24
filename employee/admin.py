@@ -91,7 +91,7 @@ class EmployeeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     # list_editable = ["status",]
     date_hierarchy = 'hire_date'
     search_fields = ["employee_id", "name", "department", "company_dpt"]
-    list_filter = ["company", "status", "employment_type", ('hire_date', DateRangeQuickSelectListFilterBuilder()),]
+    list_filter = ["company", "status", "employment_type", ('hire_date', DateRangeQuickSelectListFilterBuilder()), 'ss_start_date']
     # advanced_filter_fields = ['company', 'status', 'employment_type', 'department']
 
     fieldsets = (
@@ -110,18 +110,30 @@ class EmployeeAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         ('财务信息', {
             'fields': (
                 'employment_type', ('bank_name', 'bank_account_number'),  
-                ('contract_end_date', 'contract_term') , ('social_security_start_date', 
-                'housing_fund_start_date'), 'record_in_jijian'
+                ('contract_end_date', 'contract_term') , 
+                ('ss_start_date', 'hf_start_date'), 
+                ('ss_record', 'hf_record'),
+                'record_in_jijian'
             )
         }),
         ('教育信息', {
             'fields': (
-                ('major', 'graduate_school'), ('education_level', 'highest_degree')
+                ('major', 'graduate_school'), 
+                ('education_level', 'highest_degree'),
+                ('graduate_time'), 
+                
+            )
+        }),
+        ('证书信息', {
+            'fields': (
+                ('tech_title', 'tech_title_time'),
+                ('register_certification', 'qualification_certification')
             )
         }),
         ('其他信息', {
             'fields': (
-                'in_labour_union_member', 'emergency_contact_phone', 
+                'in_labour_union_member', 
+                ('emergency_contact_name', 'emergency_contact_relation', 'emergency_contact_phone'),
                 'political_affiliation', 'notes'
             )
         }),

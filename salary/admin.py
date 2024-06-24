@@ -5,7 +5,7 @@ from .forms import *
 from .resources import *
 # Register your models here.
 
-import actions
+from . import actions
 
 
 class PositionAdmin(ImportExportModelAdmin, admin.ModelAdmin):
@@ -24,6 +24,7 @@ class SalaryRuleAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 
 
 class StdSalaryAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    resource_class = StdSalaryResource
     list_display = ['employee', 'last_update', 'base_salary', 'base_salary_coefficient', 'meal_subsidy_plan']
     def base_salary(self, obj):
         return obj.employee.position.base_salary
@@ -33,6 +34,7 @@ class StdSalaryAdmin(ImportExportModelAdmin, admin.ModelAdmin):
 #     list_filter = ['employee']
 
 class SocialSecurityProvidentFundAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    resource_class = SocialSecurityProvidentFundResource
     list_display = ['employee', 'last_update', 'social_security_base_self_declare', 'provident_fund_base_self_declare', ]
     # readonly_fields = ['employee',
     #                    'social_security_amount_self_declare', 
@@ -63,7 +65,7 @@ class SalaryProcessAdmin(admin.ModelAdmin):
         return obj.employees.count()
     actions = [actions.calc_salary_detail]
     employees_count.short_description = '员工数'
-    list_display = ['month', 'status', 'create_time', 'last_update', 'employees_count']
+    list_display = ['id', 'month', 'status', 'create_time', 'last_update', 'employees_count']
 
 class SalaryDetailAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     resource_class = SalaryDetailResource
@@ -89,13 +91,20 @@ class IncomeTaxAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     readonly_fields = [f.name for f in all_fields]
     list_filter = ['employee__company', 'effective_process__month']
 
+class TaxRecordAdmin(ImportExportModelAdmin, admin.ModelAdmin):
+    resource_class = TaxRecordResource
+    all_fields = [f for f in TaxRecord._meta.get_fields()]
+    list_display = [f.name for f in all_fields]
+    # readonly_fields = [f.name for f in all_fields]
+    list_filter = ['effective_process__month']
+
 admin.site.register(Position, PositionAdmin)
 admin.site.register(SalaryRule, SalaryRuleAdmin)
 admin.site.register(SalaryProcess, SalaryProcessAdmin)
 admin.site.register(SalaryDetail, SalaryDetailAdmin)
 admin.site.register(StdSalary, StdSalaryAdmin)
 admin.site.register(Attendance, AttendanceAdmin)
-# admin.site.register(Subsidy)
+admin.site.register(TaxRecord, TaxRecordAdmin)
 admin.site.register(SocialSecurityProvidentFund, SocialSecurityProvidentFundAdmin)
 admin.site.register(SalaryAdjustment, SalaryAdjustmentAdmin)
-admin.site.register(IncomeTax, IncomeTaxAdmin)
+# admin.site.register(IncomeTax, IncomeTaxAdmin)

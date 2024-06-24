@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  hrsalarysystem:
+    environment:
+      - LANG=zh_CN.UTF-8
+      - LANGUAGE=zh_CN:zh
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    ports:
+      - 8000:8000
+      - 5678:5678
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: hrsalarysystem
+    ports:
+      - 5432:5432
